@@ -1,5 +1,5 @@
 """
-CaptionBelowImageSmart  (2025-05-28 • title-aware)
+CaptionAroundImageSmart  (2025-05-28 • title-aware)
 ────────────────────────────────────────────────────────────────────────
 Smart caption panel for single images *or* batches, now with placeholder lookup by node title, label as well as numeric ID or class type.
 ▸ Accepts IMAGE [N,H,W,3] (N≥1); returns IMAGE batch with caption panel.
@@ -201,7 +201,7 @@ def render_panel(img_t, caption, position, font_px,
     return pil_to_tensor(canvas)
 
 # ───────── smart batch node (title-aware)
-class CaptionBelowImageSmart:
+class CaptionAroundImageSmart:
     CATEGORY = "Image/Text"
 
     @classmethod
@@ -244,8 +244,8 @@ class CaptionBelowImageSmart:
         return (torch.cat(frames, dim=0),)
 
 # ───────── register
-NODE_CLASS_MAPPINGS = {"CaptionBelowImageSmart": CaptionBelowImageSmart}
-NODE_DISPLAY_NAME_MAPPINGS = {"CaptionBelowImageSmart": "Caption Below Image (Smart)"}
+NODE_CLASS_MAPPINGS = {"CaptionAroundImageSmart": CaptionAroundImageSmart}
+NODE_DISPLAY_NAME_MAPPINGS = {"CaptionAroundImageSmart": "Caption Around Image (Smart)"}
 __all__ = [
     "NODE_CLASS_MAPPINGS",
     "NODE_DISPLAY_NAME_MAPPINGS",

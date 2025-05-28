@@ -1,5 +1,5 @@
-# caption_below_image/__init__.py
-from .caption_below_image import (
+# caption_around_image/__init__.py
+from .caption_around_image import (
     NODE_CLASS_MAPPINGS,
     NODE_DISPLAY_NAME_MAPPINGS,
 )
