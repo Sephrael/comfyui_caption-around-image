@@ -39,12 +39,23 @@ def _fmt_date(s):
     for k in sorted(_DATE,key=len,reverse=True): s=s.replace(k,_DATE[k])
     return datetime.now().strftime(s)
 def _canon(s): return s.replace(" ","").lower()
-def build_title_index(nodes):
-    idx={}
-    for n in nodes:
-        for k in ("title","label","name"):
-            if k in n and n[k]:
-                c=_canon(n[k]); idx[c]=max(int(idx.get(c,0)),int(n["id"]))
+def build_title_index(workflow_nodes):
+    """Return {canonical_title: node_id} preferring the highest-ID node."""
+    idx = {}
+    for n in workflow_nodes:
+        # 1 · top-level names we already used
+        for k in ("title", "label", "name"):
+            if t := n.get(k):
+                c = _canon(t)
+                if c not in idx or int(n["id"]) > int(idx[c]):
+                    idx[c] = n["id"]
+
+        # 2 · new: S&R nickname stored in properties
+        prop = n.get("properties", {})
+        if s := prop.get("Node name for S&R"):
+            c = _canon(s)
+            if c not in idx or int(n["id"]) > int(idx[c]):
+                idx[c] = n["id"]
     return idx
 def _lookup(node,widget,prompt,titles):
     if node.isdigit() and node in prompt:
