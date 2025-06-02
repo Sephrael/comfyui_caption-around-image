@@ -15,7 +15,8 @@ def _check_timer_patch():
         src = f.read()
 
     needed = "_ex.WORKFLOW_START = time.perf_counter()"
-    if needed not in src:
+    needed_substr = "WORKFLOW_START = time.perf_counter()"
+    if needed_substr not in src:
         banner = textwrap.dedent(f"""
         ╭──────────────────────────────────────────────────────────────╮
         │  WARNING: execution.py is missing the global timer export.  │
