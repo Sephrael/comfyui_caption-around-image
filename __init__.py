@@ -8,8 +8,10 @@ caption_around_image  –  startup checker
 
 import inspect, importlib, os, textwrap
 
+
 def _check_timer_patch():
     import execution
+
     path = inspect.getfile(execution)
     with open(path, "r", encoding="utf-8") as f:
         src = f.read()
@@ -17,7 +19,8 @@ def _check_timer_patch():
     needed = "_ex.WORKFLOW_START = time.perf_counter()"
     needed_substr = "WORKFLOW_START = time.perf_counter()"
     if needed_substr not in src:
-        banner = textwrap.dedent(f"""
+        banner = textwrap.dedent(
+            f"""
         ╭──────────────────────────────────────────────────────────────╮
         │  WARNING: execution.py is missing the global timer export.  │
         │                                                            │
@@ -29,8 +32,10 @@ def _check_timer_patch():
         │  Your caption panel will show 'ExecutionTime' = N/A until  │
         │  this is present.                                           │
         ╰──────────────────────────────────────────────────────────────╯
-        """)
+        """
+        )
         print(banner)
+
 
 _check_timer_patch()
 

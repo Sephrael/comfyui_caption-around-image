@@ -9,11 +9,17 @@ class templateTextbox:
         return {
             "optional": {
                 "input_value": ("STRING,INT,FLOAT", {"default": ""}),
+                "input_value2": ("STRING,INT,FLOAT", {"default": ""}),
+                "input_value3": ("STRING,INT,FLOAT", {"default": ""}),
+                "input_value4": ("STRING,INT,FLOAT", {"default": ""}),
             },
             "required": {
                 "text": (
                     "STRING",
-                    {"multiline": True, "default": "Enter text with {input_value}"},
+                    {
+                        "multiline": True,
+                        "default": "Enter text with {input_value} {input_value2} {input_value3} {input_value4}",
+                    },
                 ),
             },
         }
@@ -23,11 +29,12 @@ class templateTextbox:
     FUNCTION = "process"
     CATEGORY = "custom"
 
-    def process(self, text, input_value=None):
-        # Replace variable in text
+    def process(self, text, **kwargs):
+        # Replace variables in text
         output_text = text
-        if input_value is not None:
-            output_text = output_text.replace("{input_value}", str(input_value))
+        for key in ["input_value", "input_value2", "input_value3", "input_value4"]:
+            if key in kwargs and kwargs[key] is not None:
+                output_text = output_text.replace(f"{{{key}}}", str(kwargs[key]))
         return (output_text,)
 
 
